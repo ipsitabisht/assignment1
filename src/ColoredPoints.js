@@ -141,101 +141,101 @@ function createHouse() {
 
     // chimney
 
-    let chimney = new ReflectLongTriangle(); // First part of the door
-    chimney.position = [-0.15, 0.5]; // Position the first part of the door
+    let chimney = new ReflectLongTriangle(); 
+    chimney.position = [-0.15, 0.5]; 
     chimney.base = 0.2;
     chimney.height = 0.5;
-    chimney.color = [0.2, 0.15, 0.2, 0.7]; // Brown color for the door
-    chimney.size = 30.0; // Make the door narrower
+    chimney.color = [0.2, 0.15, 0.2, 0.7]; 
+    chimney.size = 30.0;
     g_shapesList.push(chimney);
 
-    let chimney2 = new LongTriangle(); // Second part of the door
-    chimney2.position = [-0.35, 0.0]; // Position the second part of the door
+    let chimney2 = new LongTriangle(); 
+    chimney2.position = [-0.35, 0.0]; 
     chimney2.base = 0.2;
     chimney2.height = 0.5;
-    chimney2.color = [0.2, 0.15, 0.2, 0.8]; // Brown color for the door
-    chimney2.size = 30.0; // Make the door narrower
+    chimney2.color = [0.2, 0.15, 0.2, 0.8]; 
+    chimney2.size = 30.0;
     g_shapesList.push(chimney2);
 
     // Roof 
     let roof = new Triangle();
-    roof.position = [0.0,0.1]; // Position the roof on top of the house
-    roof.color = [0.8, 0.2, 0.2, 1.0]; // Reddish color for the roof
-    roof.size = 95.0; // Make the roof wider
+    roof.position = [0.0,0.1]; 
+    roof.color = [0.8, 0.2, 0.2, 1.0]; 
+    roof.size = 95.0; 
     g_shapesList.push(roof);
 
     let roof1 = new ReflectTriangle();
-    roof1.position = [0.0, 0.1]; // Position the roof on top of the house
-    roof1.color = [0.8, 0.2, 0.2, 1.0]; // Reddish color for the roof
-    roof1.size = 95.0; // Make the roof wider
+    roof1.position = [0.0, 0.1]; 
+    roof1.color = [0.8, 0.2, 0.2, 1.0]; 
+    roof1.size = 95.0; 
     g_shapesList.push(roof1);
 
     // Walls 
     let leftWall = new Triangle();
-    leftWall.position = [-0.4, -0.7]; // Position the left wall
-    leftWall.color = [0.7, 0.5, 0.3, 1.0]; // Gray color for the left wall
-    leftWall.size = 160.0; // Make the left wall shorter
+    leftWall.position = [-0.4, -0.7]; 
+    leftWall.color = [0.7, 0.5, 0.3, 1.0];
+    leftWall.size = 160.0; 
     g_shapesList.push(leftWall);
 
     
 
     let rightWall = new FlipTriangle();
-    rightWall.position = [0.4, 0.1]; // Position the right wall
-    rightWall.color = [0.7, 0.5, 0.3, 1.0]; // Gray color for the right wall
-    rightWall.size = 160.0; // Make the right wall shorter
+    rightWall.position = [0.4, 0.1];
+    rightWall.color = [0.7, 0.5, 0.3, 1.0]; 
+    rightWall.size = 160.0; 
     g_shapesList.push(rightWall);
 
 
     //windows
     // Walls (rectangles)
     let window1 = new Triangle();
-    window1.position = [-0.095, -0.15]; // Position the left wall
-    window1.color = [0.1, 0.1, 0.4, 0.7]; // Gray color for the left wall
-    window1.size = 39; // Make the left wall shorter
+    window1.position = [-0.095, -0.15];
+    window1.color = [0.1, 0.1, 0.4, 0.7]; 
+    window1.size = 39; 
     g_shapesList.push(window1);
 
     
 
     let window2 = new FlipTriangle();
-    window2.position = [0.095, 0.05]; // Position the right wall
-    window2.color = [0.1, 0.1, 0.4, 0.5]; // Gray color for the right wall
-    window2.size = 39; // Make the right wall shorter
+    window2.position = [0.095, 0.05]; 
+    window2.color = [0.1, 0.1, 0.4, 0.5];
+    window2.size = 39;
     g_shapesList.push(window2);
 
 
     // Door (long rectangle)
-    let door1 = new ReflectLongTriangle(); // First part of the door
-    door1.position = [0.15, -0.2]; // Position the first part of the door
+    let door1 = new ReflectLongTriangle();
+    door1.position = [0.15, -0.2]; 
     door1.base = 0.3;
     door1.height = 0.5;
-    door1.color = [0.3, 0.2, 0.1, 1.0]; // Brown color for the door
-    door1.size = 50.0; // Make the door narrower
+    door1.color = [0.3, 0.2, 0.1, 1.0]; 
+    door1.size = 50.0; 
     g_shapesList.push(door1);
 
-    let door2 = new LongTriangle(); // Second part of the door
-    door2.position = [-0.15, -0.7]; // Position the second part of the door
+    let door2 = new LongTriangle(); 
+    door2.position = [-0.15, -0.7]; 
     door2.base = 0.3;
     door2.height = 0.5;
-    door2.color = [0.1, 0.1, 0.1, 1.0]; // Brown color for the door
-    door2.size = 50.0; // Make the door narrower
+    door2.color = [0.1, 0.1, 0.1, 1.0]; 
+    door2.size = 50.0; 
     g_shapesList.push(door2);
 
 
     // lawn 
-    let lawn = new ReflectLongTriangle(); // First part of the door
-    lawn.position = [1, -0.7]; // Position the first part of the door
+    let lawn = new ReflectLongTriangle();
+    lawn.position = [1, -0.7];
     lawn.base = 2;
     lawn.height = 0.3;
-    lawn.color = [0.1, 0.5, 0.1, 1.0]; // Brown color for the door
-    lawn.size = 50.0; // Make the door narrower
+    lawn.color = [0.1, 0.5, 0.1, 1.0]; 
+    lawn.size = 50.0; 
     g_shapesList.push(lawn);
 
-    let lawn2 = new LongTriangle(); // Second part of the door
-    lawn2.position = [-1, -1.0]; // Position the second part of the door
+    let lawn2 = new LongTriangle(); 
+    lawn2.position = [-1, -1.0];
     lawn2.base = 2;
     lawn2.height = 0.3;
-    lawn2.color = [0.1, 0.4, 0.1, 1.0]; // Brown color for the door
-    lawn2.size = 50.0; // Make the door narrower
+    lawn2.color = [0.1, 0.4, 0.1, 1.0]; 
+    lawn2.size = 50.0; 
     g_shapesList.push(lawn2);
 
 
@@ -245,9 +245,9 @@ function createHouse() {
     for (var i = 0; i <= blades; i ++){
 
         let grass = new Triangle();
-        grass.position = [-1 + (i /10), -0.7]; // Position the left wall
-        grass.color = [0.1, 0.5, 0.1, 1.0]; // Gray color for the left wall
-        grass.size = 20; // Make the left wall shorter
+        grass.position = [-1 + (i /10), -0.7]; 
+        grass.color = [0.1, 0.5, 0.1, 1.0]; 
+        grass.size = 20; 
         g_shapesList.push(grass);
 
     }

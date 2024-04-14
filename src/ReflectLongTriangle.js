@@ -3,7 +3,7 @@ class ReflectLongTriangle {
       this.type = 'triangle';
       this.position = [0.0, 0.0, 0.0];
       this.color = [1.0, 1.0, 1.0, 1.0];
-      this.base = 0.3; // Base length in x direction
+      this.base = 0.3; 
       this.height = 0.5; // Height in y direction
     }
   
