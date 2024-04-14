@@ -3,14 +3,42 @@
   <head>
     <meta charset="utf-8" />
     <title>Draw a point (1)</title>
+    <style>
+      
+        img {
+            width: 200px; 
+            height: auto; 
+            float: right; 
+            margin-right: 20px; 
+        }
+    </style>
   </head>
 
   <body onload="main()">
     <canvas id="webgl" width="400" height="400">
-    Please use a browser that supports "canvas"
+        Please use a browser that supports "canvas"
     </canvas>
 
+
+
+    <img src="house.jpg" alt="House">
+    
+    
+
+    
+
+
+    <div>
+        <p>Name: Ipsita Bisht</p>
+        <p>Email: ibisht@ucsc.edu</p>
+        <p>Note to Grader: I added a transparency slider for the selected color </p>
+    </div>
+    
+
+
     <p id="numdot"> XXX </p>
+
+
 
     <button type="button" id="green">Green</button>
     <button type="button" id="red">Red</button>
@@ -18,43 +46,66 @@
     <button type="button" id="clearButton">Clear</button>
 
     <div>
-        <button type="button" id="pointButton">Point</button>
+        <p>Pick a Shape: </p>
+        <button type="button" id="pointButton">Square</button>
         <button type="button" id="triangleButton">Triangle</button>
         <button type="button" id="circleButton">Circle</button>
 
     </div>
 
+   
+
 
     <div>
+        <p> Click here for image: </p>
         <button type="button" id="imageButton">Generate Image</button>
     </div>
     
 
 
+    <div> 
+        <p>Shape Color: </p>
+        <p>
+            Green<input type="range" id="greenSlide" min="0" max="100" value="100" class="slider" />
+        </p>
+        <p>
+            Blue<input type="range" id="blueSlide" min="0" max="100" value="100" class="slider" />
+        </p>
+        <p>
+            Red<input type="range" id="redSlide" min="0" max="100" value="100" class="slider" />
+        </p>
 
-    <p>
-        Green<input type="range" id="greenSlide" min="0" max="100" value="100" class="slider" />
-    </p>
-    <p>
-        Blue<input type="range" id="blueSlide" min="0" max="100" value="100" class="slider" />
-    </p>
-    <p>
-        Red<input type="range" id="redSlide" min="0" max="100" value="100" class="slider" />
-    </p>
-    <p>
-        Size<input type="range" id="sizeSlider" min="5" max="40" value="0" class="slider" />
-    </p>
+    
 
-    <p>
-        (Circles) Segment count<input type="range" id="segmentSlider" min="10" max="50" value="0" class="slider" />
-    </p>
+    
+    </div>
 
+    <div>
+        <p>
+            Shape Size <input type="range" id="sizeSlider" min="5" max="40" value="0" class="slider" />
+        </p>
+
+        <p>
+            Transparency<input type="range" id="alphaSlide" min="0" max="100" value="100" class="slider" />
+        </p>
+
+        <p>
+            (Circles) Segment count<input type="range" id="segmentSlider" min="10" max="50" value="0" class="slider" />
+        </p>
+    </div>
+
+
+    
       
 
     <script src="../lib/webgl-utils.js"></script>
     <script src="../lib/webgl-debug.js"></script>
     <script src="../lib/cuon-utils.js"></script>
     <script src="Triangle.js"></script>
+    <script src="ReflectTriangle.js"></script>
+    <script src="ReflectLongTriangle.js"></script>
+    <script src="LongTriangle.js"></script>
+    <script src="FlipTriangle.js"></script>
     <script src="Circle.js"></script>
     <script src="Point.js"></script>
     <script src="ColoredPoints.js"></script>
