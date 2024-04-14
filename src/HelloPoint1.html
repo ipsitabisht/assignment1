@@ -10,21 +10,27 @@
     Please use a browser that supports "canvas"
     </canvas>
 
+    <p id="numdot"> XXX </p>
+
     <button type="button" id="green">Green</button>
     <button type="button" id="red">Red</button>
 
-    <!-- <div>
-        <input type="range" id="greenSlide" min="0" max="100" value="100" class="slider" />
-        <label>Green</label>
-    </div>
+    <button type="button" id="clearButton">Clear</button>
+
     <div>
-        <input type="range" id="redSlide" min="0" max="100" value="100" class="slider" />
-        <label>Red</label>
+        <button type="button" id="pointButton">Point</button>
+        <button type="button" id="triangleButton">Triangle</button>
+        <button type="button" id="circleButton">Circle</button>
+
     </div>
+
+
     <div>
-        <input type="range" id="blueSlide" min="0" max="100" value="100" class="slider" />
-        <label>Blue</label>
-    </div> -->
+        <button type="button" id="imageButton">Generate Image</button>
+    </div>
+    
+
+
 
     <p>
         Green<input type="range" id="greenSlide" min="0" max="100" value="100" class="slider" />
@@ -35,12 +41,22 @@
     <p>
         Red<input type="range" id="redSlide" min="0" max="100" value="100" class="slider" />
     </p>
+    <p>
+        Size<input type="range" id="sizeSlider" min="5" max="40" value="0" class="slider" />
+    </p>
+
+    <p>
+        (Circles) Segment count<input type="range" id="segmentSlider" min="10" max="50" value="0" class="slider" />
+    </p>
 
       
 
     <script src="../lib/webgl-utils.js"></script>
     <script src="../lib/webgl-debug.js"></script>
     <script src="../lib/cuon-utils.js"></script>
+    <script src="Triangle.js"></script>
+    <script src="Circle.js"></script>
+    <script src="Point.js"></script>
     <script src="ColoredPoints.js"></script>
   </body>
 </html>
