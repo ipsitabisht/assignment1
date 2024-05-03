@@ -22,6 +22,7 @@ var FSHADER_SOURCE = `
     varying vec2 v_UV;
     uniform vec4 u_FragColor;
     uniform sampler2D u_Sampler0;
+    uniform sampler2D u_Sampler1;
     uniform int u_whichTexture;
     void main() {
 
@@ -31,7 +32,9 @@ var FSHADER_SOURCE = `
         gl_FragColor = vec4(v_UV, 1.0,1.0);
       } else if (u_whichTexture == 0) {
         gl_FragColor = texture2D(u_Sampler0, v_UV);
-      } else{ 
+      } else if (u_whichTexture == 1){
+        gl_FragColor = texture2D(u_Sampler1, v_UV);
+      } else { 
         gl_FragColor = vec4(1,.2,.2,1);
       }
     }
@@ -49,6 +52,7 @@ let u_ProjectionMatrix;
 let u_ViewMatrix;
 let u_GlobalRotateMatrix;
 let u_Sampler0;
+let u_Sampler1;
 let u_whichTexture;
 // rotation
 let g_rotateX = 0 
@@ -130,6 +134,12 @@ function connectVariablesToGLSL(){
     return false;
   }
 
+  u_Sampler1 = gl.getUniformLocation(gl.program, 'u_Sampler1');
+  if (!u_Sampler1) {
+    console.log('Failed to get the storage location of u_Sampler1');
+    return false;
+  }
+
   u_whichTexture = gl.getUniformLocation(gl.program, 'u_whichTexture');
   if (!u_whichTexture) {
     console.log('Failed to get the storage location of u_Sampler0');
@@ -157,6 +167,14 @@ function initTextures() {
   image.src = 'sky.jpg';
 
 
+  var flowerImage = new Image();
+  flowerImage.onload = function() {
+      sendToTEXTURE1(flowerImage);
+      console.log("hi2") // Function to handle loading the texture
+  };
+  flowerImage.src = 'flower.jpg';
+
+
   return true; 
 }
 
@@ -179,9 +197,44 @@ function sendToTEXTURE0( image){
   gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, image);
   
   // Set the texture unit 0 to the sampler
+
+
   gl.uniform1i(u_Sampler0, 0);
 
   console.log("finished loading")
+  
+  // gl.clear(gl.COLOR_BUFFER_BIT);   // Clear <canvas>
+
+  // gl.drawArrays(gl.TRIANGLE_STRIP, 0, n); // Draw the rectangle
+
+ 
+}
+
+
+function sendToTEXTURE1( image){
+  var texture = gl.createTexture();
+  if(!texture){
+    console.log("Failed to create the texture object");
+    return false;
+  }
+
+  gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, 1); // Flip the image's y axis
+  // Enable texture unit0
+  gl.activeTexture(gl.TEXTURE1);
+  // Bind the texture object to the target
+  gl.bindTexture(gl.TEXTURE_2D, texture);
+
+  // Set the texture parameters
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+  // Set the texture image
+  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, image);
+  
+  // Set the texture unit 0 to the sampler
+
+
+  gl.uniform1i(u_Sampler1, 1);
+
+  console.log("finished loading 2")
   
   // gl.clear(gl.COLOR_BUFFER_BIT);   // Clear <canvas>
 
@@ -451,7 +504,7 @@ function click(ev) {
 
 
     var ground = new Cube();
-    ground.color = [1.0,0.0,0.0,1.0];
+    ground.color = [0.1,0.6,0.2,1.0];
     ground.textureNum = -2;
     ground.matrix.translate(0, -.75, 0.0);
     ground.matrix.scale(10,0,10);
@@ -465,6 +518,20 @@ function click(ev) {
     // sky.matrix.translate(-0.5, 0, 0);
     sky.matrix.translate(-0.5, -0.5, -0.5);
     sky.render();
+
+    var obj = new Cube();
+    obj.color = [1.0,0.0,0.0,1.0];
+    obj.textureNum=1;
+    obj.matrix.scale(0.5,0.5,0.5);
+    obj.matrix.translate(-0.5, 1, 1);
+    obj.render();
+
+    var obj2 = new Cube();
+    obj2.color = [1.0,0.7,0.0,1.0];
+    obj2.textureNum=-2;
+    obj2.matrix.scale(0.5,0.5,0.5);
+    obj2.matrix.translate(-0.5, -1.5, -1.5);
+    obj2.render();
 
     // seal body
     var leftArm = new Cube();
