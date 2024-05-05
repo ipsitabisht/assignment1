@@ -23,6 +23,7 @@ var FSHADER_SOURCE = `
     uniform vec4 u_FragColor;
     uniform sampler2D u_Sampler0;
     uniform sampler2D u_Sampler1;
+    uniform sampler2D u_Sampler2;
     uniform int u_whichTexture;
     void main() {
 
@@ -34,6 +35,8 @@ var FSHADER_SOURCE = `
         gl_FragColor = texture2D(u_Sampler0, v_UV);
       } else if (u_whichTexture == 1){
         gl_FragColor = texture2D(u_Sampler1, v_UV);
+      } else if (u_whichTexture == 2){
+        gl_FragColor = texture2D(u_Sampler2, v_UV);
       } else { 
         gl_FragColor = vec4(1,.2,.2,1);
       }
@@ -140,6 +143,12 @@ function connectVariablesToGLSL(){
     return false;
   }
 
+  u_Sampler2 = gl.getUniformLocation(gl.program, 'u_Sampler2');
+  if (!u_Sampler2) {
+    console.log('Failed to get the storage location of u_Sampler2');
+    return false;
+  }
+
   u_whichTexture = gl.getUniformLocation(gl.program, 'u_whichTexture');
   if (!u_whichTexture) {
     console.log('Failed to get the storage location of u_Sampler0');
@@ -173,6 +182,13 @@ function initTextures() {
       console.log("hi2") // Function to handle loading the texture
   };
   flowerImage.src = 'flower.jpg';
+
+  var brickImage = new Image();
+  brickImage.onload = function() {
+      sendToTEXTURE2(brickImage);
+      console.log("hi3") // Function to handle loading the texture
+  };
+  brickImage.src = 'brick.jpg';
 
 
   return true; 
@@ -235,6 +251,38 @@ function sendToTEXTURE1( image){
   gl.uniform1i(u_Sampler1, 1);
 
   console.log("finished loading 2")
+  
+  // gl.clear(gl.COLOR_BUFFER_BIT);   // Clear <canvas>
+
+  // gl.drawArrays(gl.TRIANGLE_STRIP, 0, n); // Draw the rectangle
+
+ 
+}
+
+function sendToTEXTURE2( image){
+  var texture = gl.createTexture();
+  if(!texture){
+    console.log("Failed to create the texture object");
+    return false;
+  }
+
+  gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, 1); // Flip the image's y axis
+  // Enable texture unit0
+  gl.activeTexture(gl.TEXTURE2);
+  // Bind the texture object to the target
+  gl.bindTexture(gl.TEXTURE_2D, texture);
+
+  // Set the texture parameters
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+  // Set the texture image
+  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, image);
+  
+  // Set the texture unit 0 to the sampler
+
+
+  gl.uniform1i(u_Sampler2, 2);
+
+  console.log("finished loading 3")
   
   // gl.clear(gl.COLOR_BUFFER_BIT);   // Clear <canvas>
 
@@ -532,6 +580,13 @@ function click(ev) {
     obj2.matrix.scale(0.5,0.5,0.5);
     obj2.matrix.translate(-0.5, -1.5, -1.5);
     obj2.render();
+
+    var obj3 = new Cube();
+    obj3.color = [1.0,0.7,0.0,1.0];
+    obj3.textureNum=2;
+    obj3.matrix.scale(0.5,0.5,0.5);
+    obj3.matrix.translate(1.5, -1, -1);
+    obj3.render();
 
     // seal body
     var leftArm = new Cube();
