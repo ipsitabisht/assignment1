@@ -64,6 +64,8 @@ let mouseDown = false;
 let lastX = null;
 let lastY = null;
 
+let gl_camera;
+
 function setupWebGL(){
     // Retrieve <canvas> element
     canvas = document.getElementById('webgl');
@@ -374,6 +376,8 @@ function main() {
     addActionsForHTMLUI()
     document.onkeydown = keydown;
 
+    gl_camera  = new Camera(canvas.width/canvas.height, 0.1, 1000);
+
     initTextures()
 
     // Register function (event handler) to be called on a mouse press
@@ -404,11 +408,29 @@ function tick() {
 }
 
 function keydown(ev){
-  if(ev.keyCode==89) { // right
-    g_eye[0] += 0.2;
-  } else if (ev.keyCode == 37){ //left
-    g_eye[0] -= 0.2
+  if(ev.keyCode==87) { // right
+    gl_camera.eye.elements[2]+= 0.2;
+    gl_camera.updateView();
+  } else if (ev.keyCode == 83){ //left
+    gl_camera.eye.elements[2 ] -= 0.2;
+    gl_camera.updateView();
   }
+
+  // switch(ev.key) {
+  //   case 'w':
+  //       camera.moveForward();
+  //       break;
+  //   case 's':
+  //       camera.moveBackward();
+  //       break;
+  //   case 'a':
+  //       camera.moveLeft();
+  //       break;
+  //   case 'd':
+  //       camera.moveRight();
+  //       break;
+  //   }
+
 
   renderAllShapes();
   console.log(ev.keyCode);
@@ -549,18 +571,18 @@ function click(ev) {
     var globalRotMat = new Matrix4()
     globalRotMat.rotate(g_rotateX,1,0,0);
     globalRotMat.rotate(g_rotateY,0,1,0);
-    //gl.uniformMatrix4fv(u_GlobalRotateMatrix, false, globalRotMat.elements);
+    //gl. uniformMatrix4fv(u_GlobalRotateMatrix, false, globalRotMat.elements);
 
     var finalRotMat = slideGlobalMatrix.multiply(globalRotMat);
     gl.uniformMatrix4fv(u_GlobalRotateMatrix, false, finalRotMat.elements);
 
 
-    var viewMatrix = new Matrix4();
-    viewMatrix.setLookAt(0,0,1.55, 0,0,-100, 0,1,0);
-    gl.uniformMatrix4fv(u_ViewMatrix, false, viewMatrix.elements);
-    var projectionMatrix = new Matrix4();
-    projectionMatrix.setPerspective(90, canvas.width/canvas.height, .1, 100); // near plane
-    gl.uniformMatrix4fv(u_ProjectionMatrix, false, projectionMatrix.elements);
+    // var viewMatrix = new Matrix4();
+    // viewMatrix.setLookAt(0,0,1.55, 0,0,-100, 0,1,0);
+    gl.uniformMatrix4fv(u_ViewMatrix, false, gl_camera.viewMatrix.elements);
+    // var projectionMatrix = new Matrix4();
+    // projectionMatrix.setPerspective(90, canvas.width/canvas.height, .1, 100); // near plane
+    gl.uniformMatrix4fv(u_ProjectionMatrix, false, gl_camera.projectionMatrix.elements);
 
 
 
