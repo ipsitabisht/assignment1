@@ -382,6 +382,7 @@ function main() {
 
     // Register function (event handler) to be called on a mouse press
     canvas.onmousedown = click;
+    // canvas.addEventListener('mousemove', function(ev) {rotateView(ev)});
     canvas.onmousemove = function(ev) { if(ev.buttons == 1) {click(ev) }}; 
 
   
@@ -408,38 +409,68 @@ function tick() {
 }
 
 function keydown(ev){
-  if(ev.keyCode==87) { // right
-    gl_camera.eye.elements[2]+= 0.2;
+  if(ev.keyCode==87) { // forward
+    gl_camera.eye.elements[2]+= 0.02;
+    gl_camera.moveForward();
     gl_camera.updateView();
-  } else if (ev.keyCode == 83){ //left
-    gl_camera.eye.elements[2 ] -= 0.2;
+  } else if (ev.keyCode == 83){ //back
+    gl_camera.eye.elements[2] -= 0.02;
+    gl_camera.moveBackward();
+    gl_camera.updateView();
+  } else if (ev.keyCode == 68){ // right
+    gl_camera.eye.elements[0] += 0.02;
+    gl_camera.moveRight();
+    gl_camera.updateView();
+
+  } else if (ev.keyCode == 65){ // right
+    gl_camera.eye.elements[0] -= 0.02;
+    gl_camera.moveLeft();
+    gl_camera.updateView();
+
+  } else if (ev.keyCode == 69){ // right
+    gl_camera.eye.alpha += 0.1;
+    gl_camera.panRight();
+    gl_camera.updateView();
+  } else if (ev.keyCode == 81){ // right
+    gl_camera.eye.alpha -= 0.1;
+    gl_camera.panLeft();
     gl_camera.updateView();
   }
 
+
+  gl_camera.updateView();
+
   // switch(ev.key) {
-  //   case 'w':
-  //       camera.moveForward();
-  //       break;
-  //   case 's':
-  //       camera.moveBackward();
-  //       break;
-  //   case 'a':
-  //       camera.moveLeft();
-  //       break;
-  //   case 'd':
-  //       camera.moveRight();
-  //       break;
-  //   }
+
 
 
   renderAllShapes();
   console.log(ev.keyCode);
 }
 
+// function rotateView(ev) {
+//   var x = ev.clientX;
+//   var y = ev.clientY;
+//   if(ev.buttons == 1) {
+//       var factor = 100/canvas.height;
+//       var dx = factor * (x - lastX);
+//       var dy = factor * (y - lastY);
+//       if(dx > 0) {
+//           gl_camera.panRight();
+//       } else if (dx < 0) {
+//           gl_camera.panLeft();
+//       }
+//       if(dy < 0) {
+//           gl_camera.panRight();
+//       } else if (dy > 0) {
+//           gl_camera.panLeft();
+//       }
+//   }
+//   lastX = x;
+//   lastY = y;
+//   renderAllShapes()
+// }
 
-var g_eye = [0,0,3];
-var g_at = [0,0,-100];
-var g_up = [0,1,0];
 
 function updateAnimationAngles() {
 
@@ -554,9 +585,6 @@ function click(ev) {
   }
 
 
-  var g_eye = [0,0,3];
-  var g_at = [0,0,-100];
-  var g_up = [0,1,0]
 
   function renderAllShapes(){
     // Clear <canvas>
@@ -603,7 +631,7 @@ function click(ev) {
     var sky = new Cube();
     sky.color = [1.0,0.0,0.0,1.0];
     sky.textureNum=0;
-    sky.matrix.scale(3,3,3);
+    sky.matrix.scale(32,32,32);
     // sky.matrix.translate(-0.5, 0, 0);
     sky.matrix.translate(-0.5, -0.5, -0.5);
     sky.render();
@@ -767,27 +795,6 @@ function click(ev) {
     tail5.matrix.translate(0.3, -2.3, 0.7);
 
     tail5.render();
-
-
-
-
-
-
-
-
-
-
- 
-    
-    
-
-
-
-
-
-
-
-
     
     var duration = performance.now() - startTime;
     sendTextToHTML(" ms: " + Math.floor(duration) + " fps: " + Math.floor(10000/duration), "numdot")

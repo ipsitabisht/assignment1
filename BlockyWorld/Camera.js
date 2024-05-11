@@ -7,7 +7,8 @@ class Camera {
         this.eye = new Vector3([0,1.55,0]);
         this.at = new Vector3([0,0,-1]);
         this.up = new Vector3([0,1,0]);
-        this.speed = 2
+        this.speed = 2;
+        this.alpha = 5;
 
         this.viewMatrix = new Matrix4();
 
@@ -23,7 +24,7 @@ class Camera {
  
     moveForward() {
 
-        var f = new Vector3();
+        let f = new Vector3();
         f.set(this.at);
         f.sub(this.eye);
         f.normalize();
@@ -38,7 +39,7 @@ class Camera {
 
     moveBackward() {
 
-        var b = new Vector3();    
+        let b = new Vector3();
         b.set(this.eye);
         b.sub(this.at);
         b.normalize();
@@ -51,7 +52,7 @@ class Camera {
 
     moveLeft() {
 
-        var l = new Vector3;   
+        var l = new Vector3();
         l.set(this.at);
         l.sub(this.eye);
         l.normalize();
@@ -64,7 +65,7 @@ class Camera {
 
     moveRight() {
 
-        var r = new Vector3;   
+        var r = new Vector3();
         r.set(this.eye);
         r.sub(this.at);
         r.normalize();
@@ -76,13 +77,31 @@ class Camera {
     }
 
     panLeft() {
-       
-        
+        var atP = new Vector3;
+        atP.set(this.at);
+        atP.sub(this.eye);
+        var r = Math.sqrt(atP.elements[0]*atP.elements[0] + atP.elements[2]*atP.elements[2]);
+        var theta = Math.atan2(atP.elements[2], atP.elements[0]);
+        theta -= (5 * Math.PI / 180);
+        atP.elements[0] = r * Math.cos(theta);
+        atP.elements[2] = r * Math.sin(theta);
+        this.at.set(atP);
+        this.at.add(this.eye);
+    }
+    
+    panRight() {
+        var atP = new Vector3;
+        atP.set(this.at);
+        atP.sub(this.eye);
+        var r = Math.sqrt(atP.elements[0]*atP.elements[0] + atP.elements[2]*atP.elements[2]);
+        var theta = Math.atan2(atP.elements[2], atP.elements[0]);
+        theta += (5 * Math.PI / 180);
+        atP.elements[0] = r * Math.cos(theta);
+        atP.elements[2] = r * Math.sin(theta);
+        this.at.set(atP);
+        this.at.add(this.eye);
     }
 
-    panRight() {
-        
-    }
     updateView() {
         this.viewMatrix.setLookAt(this.eye.elements[0], this.eye.elements[1], this.eye.elements[2], 
             this.at.elements[0], this.at.elements[1], this.at.elements[2], 
