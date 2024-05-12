@@ -24,6 +24,11 @@ var FSHADER_SOURCE = `
     uniform sampler2D u_Sampler0;
     uniform sampler2D u_Sampler1;
     uniform sampler2D u_Sampler2;
+    uniform sampler2D u_Sampler3;
+    uniform sampler2D u_Sampler4;
+    uniform sampler2D u_Sampler5;
+    uniform sampler2D u_Sampler6;
+
     uniform int u_whichTexture;
     void main() {
 
@@ -37,6 +42,14 @@ var FSHADER_SOURCE = `
         gl_FragColor = texture2D(u_Sampler1, v_UV);
       } else if (u_whichTexture == 2){
         gl_FragColor = texture2D(u_Sampler2, v_UV);
+      } else if (u_whichTexture == 3){
+        gl_FragColor = texture2D(u_Sampler3, v_UV);
+      } else if (u_whichTexture == 4){
+        gl_FragColor = texture2D(u_Sampler4, v_UV);
+      } else if (u_whichTexture == 5){
+        gl_FragColor = texture2D(u_Sampler5, v_UV);
+      } else if (u_whichTexture == 6){
+        gl_FragColor = texture2D(u_Sampler6, v_UV);
       } else { 
         gl_FragColor = vec4(1,.2,.2,1);
       }
@@ -56,6 +69,11 @@ let u_ViewMatrix;
 let u_GlobalRotateMatrix;
 let u_Sampler0;
 let u_Sampler1;
+let u_Sampler3;
+let u_Sampler2;
+let u_Sampler4
+let u_Sampler5;
+let u_Sampler6;
 let u_whichTexture;
 // rotation
 let g_rotateX = 0 
@@ -150,6 +168,28 @@ function connectVariablesToGLSL(){
     console.log('Failed to get the storage location of u_Sampler2');
     return false;
   }
+  u_Sampler3 = gl.getUniformLocation(gl.program, 'u_Sampler3');
+  if (!u_Sampler3) {
+    console.log('Failed to get the storage location of u_Sampler3');
+    return false;
+  }
+  u_Sampler4 = gl.getUniformLocation(gl.program, 'u_Sampler4');
+  if (!u_Sampler4) {
+    console.log('Failed to get the storage location of u_Sampler4');
+    return false;
+  }
+  u_Sampler5 = gl.getUniformLocation(gl.program, 'u_Sampler5');
+  if (!u_Sampler5) {
+    console.log('Failed to get the storage location of u_Sampler5');
+    return false;
+  }
+
+  u_Sampler6 = gl.getUniformLocation(gl.program, 'u_Sampler6');
+  if (!u_Sampler5) {
+    console.log('Failed to get the storage location of u_Sampler6');
+    return false;
+  }
+
 
   u_whichTexture = gl.getUniformLocation(gl.program, 'u_whichTexture');
   if (!u_whichTexture) {
@@ -173,24 +213,53 @@ function initTextures() {
     return false;
   }
   // Register the event handler to be called on loading an image
-  image.onload = function(){ sendToTEXTURE0(image); console.log("hi")};
+  image.onload = function(){ sendToTEXTURE0(image); };
   // Tell the browser to load an image
-  image.src = 'sky.jpg';
+  image.src = 'sky1.jpg';
 
 
   var flowerImage = new Image();
   flowerImage.onload = function() {
       sendToTEXTURE1(flowerImage);
-      console.log("hi2") // Function to handle loading the texture
+  
   };
   flowerImage.src = 'flower.jpg';
 
   var brickImage = new Image();
   brickImage.onload = function() {
       sendToTEXTURE2(brickImage);
-      console.log("hi3") // Function to handle loading the texture
+     
   };
   brickImage.src = 'brick.jpg';
+
+  var grass = new Image();
+  grass.onload = function() {
+      sendToTEXTURE3(grass);
+
+  };
+  grass.src = 'grass.jpg';
+
+
+  var leaves2 = new Image();
+  leaves2.onload = function() {
+      sendToTEXTURE4(leaves2);
+
+  };
+  leaves2.src = 'leaves2.jpg';
+  var bread = new Image();
+  bread.onload = function() {
+      sendToTEXTURE5(bread);
+
+  };
+  bread.src = 'bread.jpg';
+
+  var lava = new Image();
+  lava.onload = function() {
+      sendToTEXTURE6(lava);
+
+  };
+  lava.src = 'lava.jpg';
+
 
 
   return true; 
@@ -219,7 +288,7 @@ function sendToTEXTURE0( image){
 
   gl.uniform1i(u_Sampler0, 0);
 
-  console.log("finished loading")
+
   
   // gl.clear(gl.COLOR_BUFFER_BIT);   // Clear <canvas>
 
@@ -252,7 +321,7 @@ function sendToTEXTURE1( image){
 
   gl.uniform1i(u_Sampler1, 1);
 
-  console.log("finished loading 2")
+
   
   // gl.clear(gl.COLOR_BUFFER_BIT);   // Clear <canvas>
 
@@ -284,13 +353,136 @@ function sendToTEXTURE2( image){
 
   gl.uniform1i(u_Sampler2, 2);
 
-  console.log("finished loading 3")
+
   
   // gl.clear(gl.COLOR_BUFFER_BIT);   // Clear <canvas>
 
   // gl.drawArrays(gl.TRIANGLE_STRIP, 0, n); // Draw the rectangle
 
  
+}
+
+function sendToTEXTURE3( image){
+  var texture = gl.createTexture();
+  if(!texture){
+    console.log("Failed to create the texture object");
+    return false;
+  }
+
+  gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, 1); // Flip the image's y axis
+  // Enable texture unit0
+  gl.activeTexture(gl.TEXTURE3);
+  // Bind the texture object to the target
+  gl.bindTexture(gl.TEXTURE_2D, texture);
+
+  // Set the texture parameters
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+  // Set the texture image
+  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, image);
+  
+  // Set the texture unit 0 to the sampler
+
+
+  gl.uniform1i(u_Sampler3, 3);
+
+
+  // gl.clear(gl.COLOR_BUFFER_BIT);   // Clear <canvas>
+
+  // gl.drawArrays(gl.TRIANGLE_STRIP, 0, n); // Draw the rectangle
+
+}
+
+
+function sendToTEXTURE4( image){
+  var texture = gl.createTexture();
+  if(!texture){
+    console.log("Failed to create the texture object");
+    return false;
+  }
+
+  gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, 1); // Flip the image's y axis
+  // Enable texture unit0
+  gl.activeTexture(gl.TEXTURE4);
+  // Bind the texture object to the target
+  gl.bindTexture(gl.TEXTURE_2D, texture);
+
+  // Set the texture parameters
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+  // Set the texture image
+  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, image);
+  
+  // Set the texture unit 0 to the sampler
+
+
+  gl.uniform1i(u_Sampler4, 4);
+
+  // gl.clear(gl.COLOR_BUFFER_BIT);   // Clear <canvas>
+
+  // gl.drawArrays(gl.TRIANGLE_STRIP, 0, n); // Draw the rectangle
+
+}
+
+function sendToTEXTURE5( image){
+  var texture = gl.createTexture();
+  if(!texture){
+    console.log("Failed to create the texture object");
+    return false;
+  }
+
+  gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, 1); // Flip the image's y axis
+  // Enable texture unit0
+  gl.activeTexture(gl.TEXTURE5);
+  // Bind the texture object to the target
+  gl.bindTexture(gl.TEXTURE_2D, texture);
+
+  // Set the texture parameters
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+  // Set the texture image
+  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, image);
+  
+  // Set the texture unit 0 to the sampler
+
+
+  gl.uniform1i(u_Sampler5, 5);
+
+
+  
+  // gl.clear(gl.COLOR_BUFFER_BIT);   // Clear <canvas>
+
+  // gl.drawArrays(gl.TRIANGLE_STRIP, 0, n); // Draw the rectangle
+
+}
+
+
+function sendToTEXTURE6( image){
+  var texture = gl.createTexture();
+  if(!texture){
+    console.log("Failed to create the texture object");
+    return false;
+  }
+
+  gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, 1); // Flip the image's y axis
+  // Enable texture unit0
+  gl.activeTexture(gl.TEXTURE6);
+  // Bind the texture object to the target
+  gl.bindTexture(gl.TEXTURE_2D, texture);
+
+  // Set the texture parameters
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+  // Set the texture image
+  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, image);
+  
+  // Set the texture unit 0 to the sampler
+
+
+  gl.uniform1i(u_Sampler6, 6);
+
+
+  
+  // gl.clear(gl.COLOR_BUFFER_BIT);   // Clear <canvas>
+
+  // gl.drawArrays(gl.TRIANGLE_STRIP, 0, n); // Draw the rectangle
+
 }
 
 
@@ -329,34 +521,34 @@ let g_animation = false;
 function addActionsForHTMLUI(){
 
 
-    document.getElementById('animationYellowOnButton').onclick= function() {g_yellowAnimation = true};
-    document.getElementById('animationYellowOffButton').onclick= function() {g_yellowAnimation = false};
-    document.getElementById('yellowSlider').addEventListener('mousemove', function(){ g_yellowAngle = this.value, renderAllShapes()})
+    // document.getElementById('animationYellowOnButton').onclick= function() {g_yellowAnimation = true};
+    // document.getElementById('animationYellowOffButton').onclick= function() {g_yellowAnimation = false};
+    // document.getElementById('yellowSlider').addEventListener('mousemove', function(){ g_yellowAngle = this.value, renderAllShapes()})
 
-    document.getElementById('animationMagentaOnButton').onclick= function() {g_magentaAnimation = true};
-    document.getElementById('animationMagentaOffButton').onclick= function() {g_magentaAnimation = false};
-    document.getElementById('magentaSlider').addEventListener('mousemove', function(){ g_magentaAngle = this.value, renderAllShapes()})
+    // document.getElementById('animationMagentaOnButton').onclick= function() {g_magentaAnimation = true};
+    // document.getElementById('animationMagentaOffButton').onclick= function() {g_magentaAnimation = false};
+    // document.getElementById('magentaSlider').addEventListener('mousemove', function(){ g_magentaAngle = this.value, renderAllShapes()})
 
 
-    document.getElementById('animationTailOnButton').onclick= function() {g_tailAnimation = true};
-    document.getElementById('animationTailOffButton').onclick= function() {g_tailAnimation = false};
-    document.getElementById('tailSlider').addEventListener('mousemove', function(){ g_tailAngle = this.value, renderAllShapes()})
+    // document.getElementById('animationTailOnButton').onclick= function() {g_tailAnimation = true};
+    // document.getElementById('animationTailOffButton').onclick= function() {g_tailAnimation = false};
+    // document.getElementById('tailSlider').addEventListener('mousemove', function(){ g_tailAngle = this.value, renderAllShapes()})
 
-    document.getElementById('animationmidTailOnButton').onclick= function() {g_midtailAnimation = true};
-    document.getElementById('animationmidTailOffButton').onclick= function() {g_midtailAnimation = false};
-    document.getElementById('midtailSlider').addEventListener('mousemove', function(){ g_midtailAngle = this.value, renderAllShapes()})
+    // document.getElementById('animationmidTailOnButton').onclick= function() {g_midtailAnimation = true};
+    // document.getElementById('animationmidTailOffButton').onclick= function() {g_midtailAnimation = false};
+    // document.getElementById('midtailSlider').addEventListener('mousemove', function(){ g_midtailAngle = this.value, renderAllShapes()})
 
-    document.getElementById('animationTailFinOnButton').onclick= function() {g_tailFinAnimation = true};
-    document.getElementById('animationTailFinOffButton').onclick= function() {g_tailFinAnimation = false};
-    document.getElementById('tailFinSlider').addEventListener('mousemove', function(){ g_tailFinAngle = this.value, renderAllShapes()})
+    // document.getElementById('animationTailFinOnButton').onclick= function() {g_tailFinAnimation = true};
+    // document.getElementById('animationTailFinOffButton').onclick= function() {g_tailFinAnimation = false};
+    // document.getElementById('tailFinSlider').addEventListener('mousemove', function(){ g_tailFinAngle = this.value, renderAllShapes()})
 
-    document.getElementById('animationfin1OnButton').onclick= function() {g_fin1Animation = true};
-    document.getElementById('animationfin1OffButton').onclick= function() {g_fin1Animation = false};
-    document.getElementById('fin1Slider').addEventListener('mousemove', function(){ g_fin1Angle = this.value, renderAllShapes()})
+    // document.getElementById('animationfin1OnButton').onclick= function() {g_fin1Animation = true};
+    // document.getElementById('animationfin1OffButton').onclick= function() {g_fin1Animation = false};
+    // document.getElementById('fin1Slider').addEventListener('mousemove', function(){ g_fin1Angle = this.value, renderAllShapes()})
 
-    document.getElementById('animationfin2OnButton').onclick= function() {g_fin2Animation = true};
-    document.getElementById('animationfin2OffButton').onclick= function() {g_fin2Animation = false};
-    document.getElementById('fin2Slider').addEventListener('mousemove', function(){ g_fin2Angle = this.value, renderAllShapes()})
+    // document.getElementById('animationfin2OnButton').onclick= function() {g_fin2Animation = true};
+    // document.getElementById('animationfin2OffButton').onclick= function() {g_fin2Animation = false};
+    // document.getElementById('fin2Slider').addEventListener('mousemove', function(){ g_fin2Angle = this.value, renderAllShapes()})
 
     document.getElementById('animationOn').onclick= function() {g_animation = true};
     document.getElementById('animationOff').onclick= function() {g_animation = false};
@@ -384,6 +576,7 @@ function main() {
     canvas.onmousedown = click;
     // canvas.addEventListener('mousemove', function(ev) {rotateView(ev)});
     canvas.onmousemove = function(ev) { if(ev.buttons == 1) {click(ev) }}; 
+    
 
   
 
@@ -409,67 +602,45 @@ function tick() {
 }
 
 function keydown(ev){
-  if(ev.keyCode==87) { // forward
-    gl_camera.eye.elements[2]+= 0.02;
-    gl_camera.moveForward();
-    gl_camera.updateView();
-  } else if (ev.keyCode == 83){ //back
-    gl_camera.eye.elements[2] -= 0.02;
-    gl_camera.moveBackward();
-    gl_camera.updateView();
-  } else if (ev.keyCode == 68){ // right
-    gl_camera.eye.elements[0] += 0.02;
-    gl_camera.moveRight();
-    gl_camera.updateView();
+  const speed = 0.02; // Adjust speed as needed
 
-  } else if (ev.keyCode == 65){ // right
-    gl_camera.eye.elements[0] -= 0.02;
-    gl_camera.moveLeft();
-    gl_camera.updateView();
-
-  } else if (ev.keyCode == 69){ // right
-    gl_camera.eye.alpha += 0.1;
-    gl_camera.panRight();
-    gl_camera.updateView();
-  } else if (ev.keyCode == 81){ // right
-    gl_camera.eye.alpha -= 0.1;
-    gl_camera.panLeft();
-    gl_camera.updateView();
+  switch(ev.keyCode) {
+      case 87: // W
+          gl_camera.moveForward(speed);
+          break;
+      case 83: // S
+          gl_camera.moveBackwards(speed);
+          break;
+      case 68: // D
+          gl_camera.moveRight(speed);
+          break;
+      case 65: // A
+          gl_camera.moveLeft(speed);
+          break;
+      case 69: // E
+          gl_camera.panRight(1); 
+          break;
+      case 81: // Q
+          gl_camera.panLeft(1);
+          break;
   }
 
-
   gl_camera.updateView();
-
-  // switch(ev.key) {
-
-
-
   renderAllShapes();
-  console.log(ev.keyCode);
+  //   //gl_camera.updateView();
+  // }
+
+
+  // gl_camera.updateView();
+
+  // // switch(ev.key) {
+
+
+
+  // renderAllShapes();
+  // console.log(ev.keyCode);
 }
 
-// function rotateView(ev) {
-//   var x = ev.clientX;
-//   var y = ev.clientY;
-//   if(ev.buttons == 1) {
-//       var factor = 100/canvas.height;
-//       var dx = factor * (x - lastX);
-//       var dy = factor * (y - lastY);
-//       if(dx > 0) {
-//           gl_camera.panRight();
-//       } else if (dx < 0) {
-//           gl_camera.panLeft();
-//       }
-//       if(dy < 0) {
-//           gl_camera.panRight();
-//       } else if (dy > 0) {
-//           gl_camera.panLeft();
-//       }
-//   }
-//   lastX = x;
-//   lastY = y;
-//   renderAllShapes()
-// }
 
 
 function updateAnimationAngles() {
@@ -508,7 +679,7 @@ function updateAnimationAngles() {
   }
 
   if (poke){
-    console.log("Poking")
+
     g_fin2Angle = (8*Math.cos(3*g_seconds));
     g_yellowAngle = (6*Math.cos(2*g_seconds))
     g_magentaAngle = (6*Math.cos(2*g_seconds))
@@ -530,11 +701,11 @@ var g_shapesList = [];
 function click(ev) {
     let [x,y] = convertCoordinatesEventToGL(ev);
     if(ev.shiftKey && !poke){
-      console.log("poke")
+
       poke = true;
       return;
     } else if(ev.shiftKey && poke){
-      console.log("unpoke")
+
         poke = false;
         return;
     }
@@ -560,8 +731,8 @@ function click(ev) {
       }
       let deltaX = event.clientX - lastX;
       let deltaY = event.clientY - lastY;
-      g_rotateY += deltaX * 0.1;
-      g_rotateX = Math.max(-90, Math.min(90, g_rotateX + deltaY * 0.1));
+      g_rotateY += deltaX * 0.35;
+      g_rotateX = Math.max(-90, Math.min(90, g_rotateX + deltaY * 0.35));
       lastX = event.clientX;
       lastY = event.clientY;
       renderAllShapes()
@@ -584,6 +755,94 @@ function click(ev) {
 
   }
 
+  var g_map = [
+    [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1],
+    [1,0,0,0,0,0,0,1,0,4,0,0,0,4,4,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,0,1,0,4,0,0,0,4,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,0,1,0,0,4,4,4,4,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,0,1,0,0,0,4,4,4,4,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,0,1,0,0,4,4,4,4,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+    [1,0,3,0,1,1,1,1,0,0,4,4,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+    [1,0,3,0,3,0,3,0,3,0,3,0,3,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,4,1,1,1,1,0,3,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+    [1,0,0,4,4,4,4,1,4,4,4,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+    [1,0,0,0,4,4,4,1,4,4,0,0,3,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+    [1,0,0,4,4,4,4,1,4,4,0,0,0,0,0,1,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1],
+    [1,0,4,4,4,4,4,1,4,4,0,0,3,0,0,1,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1],
+    [1,1,1,1,1,1,1,1,1,1,1,0,0,0,1,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,0,1,0,0,0,0,0,1,1,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1],
+    [1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1],
+    [1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1],
+  ];
+
+  function drawMap(){
+    
+    var body = new Cube();
+    var body2 = new Cube();
+    var body3 = new Cube();
+    
+    for(x=0;x<16;x++){
+      for(y=0;y<16;y++){
+        if (g_map[x][y]==1){
+          // for(z = 0; z < 5; z++){ 
+            // var body = new Cube();
+            body.color = [0.8, 1.0, 1.0, 1.0];
+            body.matrix.setTranslate(-0.5,-0.75, 0);
+            body.matrix.scale(0.5, 3.5, 0.4)
+            body.textureNum=4;
+            body.matrix.translate(x-4,0, y-4);
+            // body.matrix.translate(x - 4, z * 0.5, y - 4);
+            body.render();
+          // }
+        }
+        if (g_map[x][y]==3){
+
+
+
+          body2.color = [0.8, 0.8, 0.0, 1.0];
+          body2.matrix.setTranslate(-0.5,-0.75, 0);
+          body2.matrix.scale(0.4, 0.4, 0.4)
+          body2.textureNum=5;
+  
+          body2.matrix.translate(x-4,0, y-4);
+          body2.render();
+        }
+
+        if (g_map[x][y]==4){
+
+
+
+          body3.color = [0.8, 0.8, 0.0, 1.0];
+          body3.matrix.setTranslate(-0.5,-0.75, 0);
+          body3.matrix.scale(0.5, 0.5, 0.5)
+          body3.textureNum=6;
+  
+          body3.matrix.translate(x-4,0, y-4);
+          body3.render();
+        }
+
+      }
+    }
+  }
+
+
+ 
+
 
 
   function renderAllShapes(){
@@ -591,6 +850,8 @@ function click(ev) {
     gl.clear(gl.COLOR_BUFFER_BIT);
 
     var startTime = performance.now();
+
+
 
 
     var slideGlobalMatrix = new Matrix4().rotate(g_globalAngle,0,1,0);
@@ -618,44 +879,24 @@ function click(ev) {
 
     gl.clear(gl.COLOR_BUFFER_BIT)
 
+    drawMap();
 
 
     var ground = new Cube();
     ground.color = [0.1,0.6,0.2,1.0];
-    ground.textureNum = -2;
+    ground.textureNum = 3;
     ground.matrix.translate(0, -.75, 0.0);
-    ground.matrix.scale(10,0,10);
+    ground.matrix.scale(32,0,32);
     ground.matrix.translate(-.5, 0, -.5);
     ground.render();
 
     var sky = new Cube();
-    sky.color = [1.0,0.0,0.0,1.0];
+    sky.color = [0.0,0.0,5,1.0];
     sky.textureNum=0;
     sky.matrix.scale(32,32,32);
     // sky.matrix.translate(-0.5, 0, 0);
     sky.matrix.translate(-0.5, -0.5, -0.5);
     sky.render();
-
-    var obj = new Cube();
-    obj.color = [1.0,0.0,0.0,1.0];
-    obj.textureNum=1;
-    obj.matrix.scale(0.5,0.5,0.5);
-    obj.matrix.translate(-0.5, 1, 1);
-    obj.render();
-
-    var obj2 = new Cube();
-    obj2.color = [1.0,0.7,0.0,1.0];
-    obj2.textureNum=-2;
-    obj2.matrix.scale(0.5,0.5,0.5);
-    obj2.matrix.translate(-0.5, -1.5, -1.5);
-    obj2.render();
-
-    var obj3 = new Cube();
-    obj3.color = [1.0,0.7,0.0,1.0];
-    obj3.textureNum=2;
-    obj3.matrix.scale(0.5,0.5,0.5);
-    obj3.matrix.translate(1.5, -1, -1);
-    obj3.render();
 
     // seal body
     var leftArm = new Cube();
@@ -800,125 +1041,6 @@ function click(ev) {
     sendTextToHTML(" ms: " + Math.floor(duration) + " fps: " + Math.floor(10000/duration), "numdot")
 }
 
-
-function createHouse() {
-  // Clear existing shapes
-  g_shapesList = [];
-
-
-  // chimney
-
-  let chimney = new ReflectLongTriangle(); 
-  chimney.position = [-0.15, 0.5]; 
-  chimney.base = 0.2;
-  chimney.height = 0.5;
-  chimney.color = [0.2, 0.15, 0.2, 0.7]; 
-  chimney.size = 30.0;
-  g_shapesList.push(chimney);
-
-  let chimney2 = new LongTriangle(); 
-  chimney2.position = [-0.35, 0.0]; 
-  chimney2.base = 0.2;
-  chimney2.height = 0.5;
-  chimney2.color = [0.2, 0.15, 0.2, 0.8]; 
-  chimney2.size = 30.0;
-  g_shapesList.push(chimney2);
-
-  // Roof 
-  let roof = new Triangle();
-  roof.position = [0.0,0.1]; 
-  roof.color = [0.8, 0.2, 0.2, 1.0]; 
-  roof.size = 95.0; 
-  g_shapesList.push(roof);
-
-  let roof1 = new ReflectTriangle();
-  roof1.position = [0.0, 0.1]; 
-  roof1.color = [0.8, 0.2, 0.2, 1.0]; 
-  roof1.size = 95.0; 
-  g_shapesList.push(roof1);
-
-  // Walls 
-  let leftWall = new Triangle();
-  leftWall.position = [-0.4, -0.7]; 
-  leftWall.color = [0.7, 0.5, 0.3, 1.0];
-  leftWall.size = 160.0; 
-  g_shapesList.push(leftWall);
-
-  
-
-  let rightWall = new FlipTriangle();
-  rightWall.position = [0.4, 0.1];
-  rightWall.color = [0.7, 0.5, 0.3, 1.0]; 
-  rightWall.size = 160.0; 
-  g_shapesList.push(rightWall);
-
-
-  //windows
-  // Walls (rectangles)
-  let window1 = new Triangle();
-  window1.position = [-0.095, -0.15];
-  window1.color = [0.1, 0.1, 0.4, 0.7]; 
-  window1.size = 39; 
-  g_shapesList.push(window1);
-
-  
-
-  let window2 = new FlipTriangle();
-  window2.position = [0.095, 0.05]; 
-  window2.color = [0.1, 0.1, 0.4, 0.5];
-  window2.size = 39;
-  g_shapesList.push(window2);
-
-
-  // Door (long rectangle)
-  let door1 = new ReflectLongTriangle();
-  door1.position = [0.15, -0.2]; 
-  door1.base = 0.3;
-  door1.height = 0.5;
-  door1.color = [0.3, 0.2, 0.1, 1.0]; 
-  door1.size = 50.0; 
-  g_shapesList.push(door1);
-
-  let door2 = new LongTriangle(); 
-  door2.position = [-0.15, -0.7]; 
-  door2.base = 0.3;
-  door2.height = 0.5;
-  door2.color = [0.1, 0.1, 0.1, 1.0]; 
-  door2.size = 50.0; 
-  g_shapesList.push(door2);
-
-
-  // lawn 
-  let lawn = new ReflectLongTriangle();
-  lawn.position = [1, -0.7];
-  lawn.base = 2;
-  lawn.height = 0.3;
-  lawn.color = [0.1, 0.5, 0.1, 1.0]; 
-  lawn.size = 50.0; 
-  g_shapesList.push(lawn);
-
-  let lawn2 = new LongTriangle(); 
-  lawn2.position = [-1, -1.0];
-  lawn2.base = 2;
-  lawn2.height = 0.3;
-  lawn2.color = [0.1, 0.4, 0.1, 1.0]; 
-  lawn2.size = 50.0; 
-  g_shapesList.push(lawn2);
-
-
-  // grass 
-  var blades = 30;
-
-  for (var i = 0; i <= blades; i ++){
-
-      let grass = new Triangle();
-      grass.position = [-1 + (i /10), -0.7]; 
-      grass.color = [0.1, 0.5, 0.1, 1.0]; 
-      grass.size = 20; 
-      g_shapesList.push(grass);
-
-  }
-}
 
 
 
