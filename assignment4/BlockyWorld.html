@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Draw a point (1)</title>
+    <style>
+      
+        img {
+            width: 200px; 
+            height: auto; 
+            float: right; 
+            margin-right: 20px; 
+        }
+   
+
+    </style>
+  </head>
+
+  <body onload="main()">
+    <div style = "display: flex; flex-direction: row;">
+        <canvas id="webgl" width="950" height="850" >
+        Please use a browser that supports "canvas"
+        </canvas>
+        <div style = "padding: 20px"> 
+            <div >
+            <p>Name: Ipsita Bisht</p>
+            <p>Email: ibisht@ucsc.edu</p>
+            <p>Note to Grader: Follow the bread crumb path and find the large toast to help the narwhal escape the lava maze!</p>
+            <p>Use WASDQE keys to move around and also move around camera view with mouse</p>
+            </div>
+
+
+            <p>
+                Animation:
+                <button type="button" id="animationOn">ON</button>
+                <button type="button" id="animationOff">OFF</button>
+            </p>
+
+            <p>
+                Normal:
+                <button type="button" id="normalOn">ON</button>
+                <button type="button" id="normalOff">OFF</button>
+            </p>
+        
+                
+            <p>
+                Camera Angle<input type="range" id="angleSlider" min="-180" max="180" value="5" class="slider" />
+            </p>
+
+
+            
+            <!-- <div>
+                <p>
+                    Body Slider<input type="range" id="yellowSlider" min="-45" max="45" value="0" class="slider" />
+                    <button type="button" id="animationYellowOnButton">ON</button>
+                    <button type="button" id="animationYellowOffButton">OFF</button>
+                </p>
+               
+                
+
+            </div>
+            <div >
+                <p>
+                    Tail Slider<input type="range" id="tailSlider" min="-30" max="30" value="0" class="slider" />
+                    <button type="button" id="animationTailOnButton">ON</button>
+                    <button type="button" id="animationTailOffButton">OFF</button>
+                </p>
+                
+                
+
+                <p>
+                    Mid Tail Slider<input type="range" id="midtailSlider" min="-6" max="6" value="0" class="slider" />
+                    <button type="button" id="animationmidTailOnButton">ON</button>
+                <button type="button" id="animationmidTailOffButton">OFF</button>
+                </p>
+
+                
+
+                <p>
+                    Tail Fin Slider<input type="range" id="tailFinSlider" min="-6" max="6" value="0" class="slider" />
+                    <button type="button" id="animationTailFinOnButton">ON</button>
+                    <button type="button" id="animationTailFinOffButton">OFF</button>
+                </p>
+        
+                
+                
+
+            </div>
+            <div>
+                <p>
+                    Left Fin Slider<input type="range" id="fin1Slider" min="-20" max="20" value="0" class="slider" />
+                    <button type="button" id="animationfin1OnButton">ON</button>
+                    <button type="button" id="animationfin1OffButton">OFF</button>
+                </p>
+               
+                
+                <p>
+                    Right Fin Slider<input type="range" id="fin2Slider" min="-20" max="20" value="0" class="slider" />
+                    <button type="button" id="animationfin2OnButton">ON</button>
+                    <button type="button" id="animationfin2OffButton">OFF</button>
+                </p>
+               
+               
+                
+
+            </div> -->
+<!-- 
+            <div>
+
+                <p>
+                    Head Slider<input type="range" id="magentaSlider" min="-45" max="45" value="0" class="slider" />
+                    <button type="button" id="animationMagentaOnButton">ON</button>
+                    <button type="button" id="animationMagentaOffButton">OFF</button>
+                </p>
+               
+               
+                
+
+
+            </div> -->
+        
+
+
+
+            <p id="numdot"> XXX </p>
+
+
+
+           
+
+
+
+    </div>
+
+    <script src="../lib/webgl-utils.js"></script>
+    <script src="../lib/webgl-debug.js"></script>
+    <script src="../lib/cuon-utils.js"></script>
+    <script src="../lib/cuon-matrix.js"></script>
+    <script src="Triangle.js"></script>
+    <script src="ReflectTriangle.js"></script>
+    <script src="ReflectLongTriangle.js"></script>
+    <script src="LongTriangle.js"></script>
+    <script src="FlipTriangle.js"></script>
+    <script src="Circle.js"></script>
+    <script src="Point.js"></script>
+    <script src="Sphere.js"></script>
+    <script src="Cube.js"></script>
+
+    <script src="TrianglePrism.js"></script>
+    <!-- <script src="cuon-matrix-cse160.js"></script> -->
+    <script src="Camera.js"></script>
+    <script src="BlockyWorld.js"></script>
+
+  </body>
+</html>
