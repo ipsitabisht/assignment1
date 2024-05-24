@@ -4,9 +4,9 @@ class Camera {
     constructor (aspectratio, near, far) {
         this.type = "camera";
         this.fov = 100;
-        this.eye = new Vector3([-1,0,-0.9]);
-        this.at = new Vector3([5,0,0]);
-        this.up = new Vector3([0,2,0]);
+        this.eye = new Vector3([0,0.5,2]);
+        this.at = new Vector3([0,0,0]);
+        this.up = new Vector3([0,1,0]);
         this.speed = 0.7;
         this.alpha = 10;
 
