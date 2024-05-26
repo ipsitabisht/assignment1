@@ -96,6 +96,7 @@ var FSHADER_SOURCE = `
 
       if (u_lightOn){
         gl_FragColor = vec4(specular + diffuse + ambient, 1.0);
+        // gl_FragColor = vec4(diffuse+ambient, 1.0);
 
       } else {
         gl_FragColor = vec4(diffuse+ambient, 1.0);
@@ -575,7 +576,7 @@ let g_normalOff = false;
 
 let g_lightPos = [0,1, -2]
 
-let g_lightOn= false;
+let g_lightOn= true;
 let g_lightOff = false;
 
 function addActionsForHTMLUI(){
@@ -1119,30 +1120,7 @@ function click(ev) {
     // tail5.normalMatrix.setInverseOf(tail5.matrix).transpose();
     tail5.render();
 
-    
-    // // seal body
-    // var leftArm = new Cube();
-    // leftArm.color = [0.6,0.9,0.9,1];
-    // if (g_normalOn){
-    //   leftArm.textureNum=-3;
-    // }
-    // //leftArm.matrix = tailCoords;
-    // // leftArm.matrix.setTranslate(0, -.5, 0);
-    // leftArm.matrix.rotate(-90, 9, 0, 0);
-    // if(poke){
-    //   leftArm.matrix.rotate(g_yellowAngle,0,0,1)
-
-    // }
-    // leftArm.matrix.rotate(45,0,0,1)
-    // var yellowCoordinates = new Matrix4(leftArm.matrix);
-    // var bodyCoordinates = new Matrix4(leftArm.matrix)
-    // var bodyCoordinates2 = new Matrix4(leftArm.matrix)
-    // var tailCoords = new Matrix4(leftArm.matrix)
-    // leftArm.matrix.scale(0.5, 0.5, 0.5);
-    // leftArm.matrix.translate(-0.5, 0.0, 0.0);
-    // leftArm.render();
-
-    // gl.uniform1i(u_lightOn, g_lightOn ? 1 : 0);
+  
 
     // if (g_lightOn){
       gl.uniform1i(u_lightOn, g_lightOn);
@@ -1157,17 +1135,6 @@ function click(ev) {
       // tail.normalMatrix.setInverseOf(tail.matrix).transpose();
       light.render();
 
-    // }
-
-    // gl.uniform3f(u_lightPos, g_lightPos[0], g_lightPos[1], g_lightPos[2]);
-
-    // gl.uniform3f(u_cameraPos, gl_camera.eye.elements[0], gl_camera.eye.elements[1], gl_camera.eye.elements[2]);
-    // var light = new Cube();
-    // light.color = [2,2,0,1];
-    // light.matrix.translate(g_lightPos[0],g_lightPos[1], g_lightPos[2]);
-    // light.matrix.scale(-.1,-.1,-.1);
-    // light.matrix.translate(-.5,-.5,-.5);
-    // light.render();
 
 
     var ball = new Sphere();
@@ -1178,13 +1145,6 @@ function click(ev) {
     ball.matrix.scale(0.4, 0.4, 0.4);
     // ball.normalMatrix.setInverseOf(ball.matrix).transpose();
     ball.render();
-
-
-
-
-
-
-
 
     var duration = performance.now() - startTime;
     sendTextToHTML(" ms: " + Math.floor(duration) + " fps: " + Math.floor(10000/duration), "numdot")
